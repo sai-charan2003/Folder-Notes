@@ -182,6 +182,37 @@ reference.addValueEventListener(object:ValueEventListener{
               Text(text = "No Notes")
           }
       }
+        else{
+          LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.fillMaxSize().padding(it)){
+              items(noteDataState.size){
+
+                  OutlinedCard (
+                      onClick = {
+                          val noteId = noteDataState[it].id
+                          Log.d("TAG", "home: $noteId")
+                          navController1.navigate("editnote/"+noteId)
+
+                      }
+                      ,modifier = Modifier
+
+                          .height(250.dp)
+                          .padding(start = 10.dp, end = 10.dp, bottom = 20.dp, top = 10.dp)){
+                      Column (){
+                          Text(text = "${noteDataState[it].title}",modifier= Modifier
+                              .fillMaxWidth()
+
+                              .padding(bottom = 10.dp), textAlign = TextAlign.Center, fontSize = 20.sp, maxLines = 1)
+
+                          Text(text = "${noteDataState[it].body}",modifier= Modifier
+                              .fillMaxWidth()
+
+                              .padding(5.dp),fontSize = 15.sp, maxLines = 10)
+                      }
+                  }
+
+              }
+          }
+      }
 
         }
     if(showbox){
