@@ -24,6 +24,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -53,7 +54,7 @@ import com.example.quicknotes.database.Note
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 
-fun newnote(navController: NavHostController){
+fun newnote(navController: NavHostController,folderid:Int){
 
 
     val context= LocalContext.current
@@ -97,7 +98,7 @@ fun newnote(navController: NavHostController){
                     navController.popBackStack()
              }
                 else{
-                    viewmodel.insert(Note(0, title, body))
+                    viewmodel.insert(Note(id = 0,title=title, body = body, folderid = folderid))
                     navController.popBackStack()
 
                 }
@@ -118,7 +119,10 @@ fun newnote(navController: NavHostController){
                 BasicTextField(
                     value = title,
                     onValueChange = { title = it },
-                    textStyle = TextStyle(fontSize = 30.sp, color = LocalContentColor.current, fontWeight = FontWeight.Bold),
+
+
+                    textStyle = MaterialTheme.typography.headlineLarge.copy(LocalContentColor.current),
+
                     modifier = Modifier.fillMaxSize().padding(start = 5.dp,end=5.dp, bottom = 30.dp, top = 8.dp),
 
 
@@ -128,7 +132,7 @@ fun newnote(navController: NavHostController){
                     decorationBox = { innerTextField ->
                         Box() {
                             if(title.isEmpty()){
-                                Text(text = "Title", fontSize = 30.sp)
+                                Text(text = "Title", style = MaterialTheme.typography.headlineLarge)
                             }
                             innerTextField()
 
@@ -141,14 +145,14 @@ fun newnote(navController: NavHostController){
                 BasicTextField(
                     value = body,
                     onValueChange = { body = it },
-                    textStyle = TextStyle(color = LocalContentColor.current, fontSize = 25.sp),
+                    textStyle = MaterialTheme.typography.titleLarge.copy(LocalContentColor.current),
                     modifier = Modifier.padding(start = 5.dp,end=5.dp,  top = 15.dp).fillMaxSize(),
                     cursorBrush = SolidColor(LocalContentColor.current),
 
                     decorationBox = { innerTextField ->
                         Box() {
                             if(body.isEmpty()){
-                                Text(text = "Body", fontSize = 25.sp)
+                                Text(text = "Body", style = MaterialTheme.typography.titleLarge)
                             }
                             innerTextField()
 

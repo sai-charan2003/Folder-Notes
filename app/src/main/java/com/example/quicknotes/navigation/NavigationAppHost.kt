@@ -19,6 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.quicknotes.screens.editscreen
+import com.example.quicknotes.screens.folderscreen
 
 import com.example.quicknotes.screens.home
 import com.example.quicknotes.screens.newnote
@@ -29,58 +30,43 @@ import com.example.quicknotes.screens.newnote
 
 fun NavigationAppHost(navController: NavHostController) {
     val context= LocalContext.current
-    NavHost(navController = navController, startDestination = Destinations.Home.route, enterTransition = { EnterTransition.None}, exitTransition = { ExitTransition.None}){
-        composable(Destinations.Home.route, ){
-
-            home(navController)
-        }
-        composable(Destinations.newnote.route,enterTransition = {
-            fadeIn(
-                animationSpec = tween(
-                    200, easing = LinearEasing
-                )
-            ) + slideIntoContainer(
-                animationSpec = tween(300, easing = EaseIn),
-                towards = AnimatedContentTransitionScope.SlideDirection.Start
-            )
-        },
-            exitTransition = {
-                fadeOut(
-                    animationSpec = tween(
-                        300, easing = LinearEasing
-                    )
-                ) + slideOutOfContainer(
-                    animationSpec = tween(300, easing = LinearEasing),
-                    towards = AnimatedContentTransitionScope.SlideDirection.End
-                )
-            }){
-            newnote(navController)
-
-        }
-        composable(route=Destinations.editnote.route, enterTransition = {
-            fadeIn(
-                animationSpec = tween(
-                    300, easing = LinearEasing
-                )
-            ) + slideIntoContainer(
-                animationSpec = tween(300, easing = LinearEasing),
-                towards = AnimatedContentTransitionScope.SlideDirection.Start
-            )
-        },
-            exitTransition = {
-                fadeOut(
-                    animationSpec = tween(
-                        300, easing = LinearEasing
-                    )
-                ) + slideOutOfContainer(
-                    animationSpec = tween(300, easing = LinearEasing),
-                    towards = AnimatedContentTransitionScope.SlideDirection.End
-                )
-            },arguments = listOf(navArgument("id"){
+    NavHost(navController = navController, startDestination = Destinations.folderscreen.route, enterTransition = { EnterTransition.None}, exitTransition = { ExitTransition.None}){
+        composable(Destinations.Home.route,  arguments = listOf(navArgument("folderid"){
             type= NavType.IntType
         })){
-            Log.d("TAG", it.arguments?.getInt("id").toString())
-            it.arguments?.getInt("id")?.let { it1 -> editscreen(navController,id = it1) }
+
+            it.arguments?.getInt("folderid")?.let { it2 -> home(navController, folderid = it2) }
+        }
+        composable(Destinations.folderscreen.route, ){
+
+            folderscreen(navController)
+        }
+        composable(Destinations.newnote.route,
+            arguments = listOf(navArgument("folderid"){
+                type= NavType.IntType
+            })){
+            it.arguments?.getInt("folderid")?.let { it2 -> newnote(navController, folderid = it2) }
+
+        }
+        composable(route=Destinations.editnote.route,
+            arguments = listOf(navArgument("id"){
+            type= NavType.IntType
+        },
+                navArgument("folderid"){
+                    type=NavType.IntType
+                }
+
+
+            )){
+            val noteid=it.arguments?.getInt("id")
+            val folderid=it.arguments?.getInt("folderid")
+            if (noteid != null) {
+                if (folderid != null) {
+                    editscreen(navHostController = navController, id = noteid, folderid = folderid)
+                }
+            }
+
+
         }
     }
 

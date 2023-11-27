@@ -44,6 +44,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
+
         super.onCreate(savedInstanceState)
         setContent {
 
@@ -54,6 +55,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val context= LocalContext.current
+                    val viewmodel = viewModel<ViewModel>(
+                        factory = object : ViewModelProvider.Factory {
+                            override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
+                                return ViewModel(
+                                    context
+                                ) as T
+                            }
+                        }
+                    )
+                    //viewmodel.editor.putBoolean("showsnackbar",true).apply()
                     val navController= rememberNavController()
                     NavigationAppHost(navController = navController)
 

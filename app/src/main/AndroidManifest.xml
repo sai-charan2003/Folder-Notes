@@ -12,18 +12,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickNotes"
         tools:targetApi="31">
+
+
         <activity
             android:name=".MainActivity"
             android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.QuickNotes">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+<!--        <receiver-->
+<!--            android:name=".newnote"-->
+<!--            android:description="@string/add_new_note"-->
+<!--            android:exported="true"-->
+<!--            android:label="Add New Note">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
+<!--            </intent-filter>-->
+
+<!--            <meta-data-->
+<!--                android:name="android.appwidget.provider"-->
+<!--                android:resource="@xml/add_new_widget" />-->
+<!--        </receiver>-->
+
+
+
+
+
     </application>
 
 </manifest>

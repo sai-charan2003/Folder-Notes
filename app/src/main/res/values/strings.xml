@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">QuickNotes</string>
+    <string name="app_name">Folder Notes</string>
+    <string name="add_new_note">Add New Note</string>
 </resources>
